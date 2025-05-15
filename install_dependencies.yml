@@ -1,0 +1,20 @@
+- name: Install and start cron on all Debian hosts
+  hosts: all
+  become: yes
+  vars:
+    package_name: cron
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Ensure cron package is installed
+      apt:
+        name: "{{ package_name }}"
+        state: present
+
+    - name: Ensure cron service is started and enabled
+      service:
+        name: "{{ package_name }}"
+        state: started
+        enabled: yes

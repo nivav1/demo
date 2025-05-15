@@ -1,0 +1,21 @@
+---
+- name: Create a folder in /root/etc
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure /root/etc directory exists
+      file:
+        path: /root/etc/myapp
+        state: directory
+        mode: '0700'
+        owner: root
+        group: root
+
+    - name: Create backup file
+      copy:
+        dest: /root/etc/myapp/example.txt
+        content: |
+          Hello world
+        owner: root
+        group: root
+        mode: '0600'
